@@ -34,7 +34,7 @@ class ViewModel: ObservableObject {
         EVALUATION CRITERIA
         Check these 9 points:
         1. Challenge is a call to action, not just a topic.
-        2. Connects to the Essential Question and Big Idea.
+        2. Connection and congruity from Big Idea, Essential Question, and Challenge.
         3. Includes personal or contextual relevance (why it matters).
         4. Has available resources (mentors, data, experience).
         5. Does not involve law, health diagnosis, or medical advice.
