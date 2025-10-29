@@ -67,22 +67,6 @@ class ViewModel: ObservableObject {
       Challenge: "Helping dentist to identify cavity."
       Reason: Open for exploration, clear professional context (assistive, not medical advice).
 
-    Neutral Example Challenges:
-    - Big Idea: Learning
-      Essential Question: How might AI enhance learning experiences in the academy?
-      Challenge: "Build an app for better learning using Foundation Models."
-      Reason: Too broad and context-free; audience, setting, and scope are unclear.
-
-    - Big Idea: Collaboration & Teamwork
-      Essential Question: How might student teams collaborate more effectively on projects?
-      Challenge: "Improve group collaboration with an AI assistant."
-      Reason: Aligned with learning but generic; may be too wide for timeline.
-
-    - Big Idea: Motivation in Learning
-      Essential Question: How might we sustain learner motivation across a term?
-      Challenge: "Use AI to help students stay motivated."
-      Reason: Relevant but vague; lacks who/where and resource check.
-
     Bad Example Challenges:
     - Big Idea: Study Skills
       Essential Question: How might people study more effectively?
@@ -109,7 +93,7 @@ class ViewModel: ObservableObject {
     Evaluate step by step:
     1. Read input values.
     2. Compare against the 13 criteria.
-    3. Decide Good 👍🏻 / Neutral 🖖🏻 / Not Good 👎.
+    3. Decide Good to Go 👍🏻 / Not Good to Go 👎.
     4. Write clear reason and 2 short suggestions.
     Keep answer concise (<80 words total).
     """
