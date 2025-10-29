@@ -36,7 +36,7 @@ class ViewModel: ObservableObject {
     EVALUATION CRITERIA
     Check these 13 points:
     1. Challenge is a call to action, not just a topic.
-    2. Big Idea, Essential Question, and Challenge refer to the same overarching concept or domain.
+    2. Big Idea, Essential Question, and Challenge refer to the same overarching concept or domain and the subject is consistent.
     3. The subject group (e.g., kids, adults, teenagers) is consistent.
     4. The Essential Question logically emerges from the Big Idea, and the Challenge concretely answers the Essential Question.
     5. Each level appropriately narrows in scope (Big Idea = broad, EQ = guiding, Challenge = actionable).
