@@ -16,6 +16,10 @@ struct Particle: Identifiable {
     var color: Color
 }
 
+
+
+import SwiftUI
+
 struct ParticleBurst: View {
     @State private var particles: [Particle] = []
     var colors: [Color] = [.pink, .purple, .blue, .mint, .orange]
@@ -35,7 +39,7 @@ struct ParticleBurst: View {
         }
         .onAppear { generate() }
     }
-
+    
     private func generate() {
         particles = (0..<count).map { i in
             let angle = Angle(degrees: Double(i) / Double(count) * 360.0)
@@ -45,7 +49,7 @@ struct ParticleBurst: View {
             return Particle(angle: angle, distance: distance, size: size, color: color)
         }
     }
-
+    
     private struct AnimOnAppear: ViewModifier {
         var angle: Angle
         var distance: CGFloat
@@ -71,3 +75,5 @@ struct ParticleBurst: View {
         }
     }
 }
+
+
