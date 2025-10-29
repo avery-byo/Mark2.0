@@ -34,14 +34,18 @@ class ViewModel: ObservableObject {
         EVALUATION CRITERIA
         Check these 9 points:
         1. Challenge is a call to action, not just a topic.
-        2. Connection and congruity from Big Idea, Essential Question, and Challenge.
-        3. Includes personal or contextual relevance (why it matters).
-        4. Has available resources (mentors, data, experience).
-        5. Does not involve law, health diagnosis, or medical advice.
-        6. Actionable → can be done or prototyped with an app.
-        7. Proper scope → not too broad or too small.
-        8. No fixed solution in the challenge (how) → open for creative exploration.
-        9. Clear context → who and where are involved
+        2. Big Idea, Essential Question, and Challenge refer to the same overarching concept or domain.
+        3. The subject group (e.g. kids, adults, teenagers) is consistent.
+        4. The Essential Question logically emerges from the Big Idea, and the Challenge concretely answers the Essential Question.
+        5. Each level appropriately narrows in scope (Big Idea = broad, EQ = guiding, Challenge = actionable).
+        6. Connection and congruity from Big Idea, Essential Question, and Challenge.
+        7. Includes personal or contextual relevance (why it matters).
+        8. Has available resources (mentors, data, experience).
+        9. Does not involve law, health diagnosis, or medical advice.
+        10. Actionable → can be done or prototyped with an app.
+        11. Proper scope → not too broad or too small.
+        12. No fixed solution in the challenge (how) → open for creative exploration.
+        13. Clear context → who and where are involved
         
         REFERENCE (for few-shot fine-tuning)
         Good Examples Challenges: 
