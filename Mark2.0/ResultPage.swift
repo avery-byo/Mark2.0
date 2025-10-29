@@ -16,7 +16,7 @@ struct ResultPage: View {
             
             if let result = viewModel.challengeEvaluationResult {
                 VStack(alignment: .leading, spacing: 8) {
-                    Text("\(result.evaluation) ❣️")
+                    Text("\(result.evaluation)")
                         .font(.system(.body, design: .monospaced))
                         .multilineTextAlignment(.leading)
                         .frame(maxWidth: .infinity, alignment: .leading)
