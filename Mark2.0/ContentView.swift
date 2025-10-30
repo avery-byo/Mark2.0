@@ -4,9 +4,8 @@
 //
 //  Created by Rizal Hilman on 29/10/25.
 //
-
 import SwiftUI
-
+import ImagePlayground
 
 struct ContentView: View {
     
@@ -16,6 +15,12 @@ struct ContentView: View {
     @State var engage: Engage = Engage(bigIdea: "",
                                        essentialQuestion: "",
                                        challengeStatement: "")
+    @State private var imageDescription = ""
+    @State private var imageURL: URL?
+    @State private var selectedLanguages: [String] = []
+    @FocusState private var isTextFieldFocused: Bool
+    @State private var navigateToResults = false
+    @State private var isGenerating = false
     
     var body: some View {
         NavigationStack {
@@ -23,42 +28,49 @@ struct ContentView: View {
                 VStack(alignment: .leading, spacing: 16) {
                     headerFlavor
                     Text("🧠 Big Idea")
-                    StyledTextField(placeholder: "Big Idea", text: $engage.bigIdea)
+                    StyledTextField(placeholder: "Big Idea", text: $engage.bigIdea, onTypingBegan: {
+                        Task { await viewModel.prewarmIfNeeded() }
+                    })
                     Text("❓ Essential Question")
-                    StyledTextField(placeholder: "Essential Question", text: $engage.essentialQuestion)
+                    StyledTextField(placeholder: "Essential Question", text: $engage.essentialQuestion, onTypingBegan: {
+                        Task { await viewModel.prewarmIfNeeded() }
+                    })
                     Text("🧩 Challenge")
-                    StyledTextField(placeholder: "Challenge", text: $engage.challengeStatement)
+                    StyledTextField(placeholder: "Challenge", text: $engage.challengeStatement, onTypingBegan: {
+                        Task { await viewModel.prewarmIfNeeded() }
+                    })
                 }
-
-                HStack {
-                    Button {
-                        submit()
-                    } label: {
-                        Text("Evaluate Synthesis")
+                
+                if viewModel.isResponding {
+                    Text("Analyzing...")
+                        .italic()
+                        .padding()
+                } else {
+                    HStack {
+                        Button {
+                            submit()
+                        } label: {
+                            Text("Evaluate Synthesis")
+                        }
+                        .buttonStyle(GradientPillButtonStyle())
+                        
+                        if viewModel.challengeEvaluationResult != nil {
+                            Button {
+                                viewModel.reset()
+                            } label: {
+                                Text("Reset")
+                            }
+                            .buttonStyle(RedGradientPillButtonStyle())
+                        }
+                        
                     }
-                    .buttonStyle(GradientPillButtonStyle())
-
-                    Button {
-                        viewModel.reset()
-                    } label: {
-                        Text("Reset")
-                    }
-                    .buttonStyle(RedGradientPillButtonStyle())
+                    .padding()
                 }
-
-                if let _ = viewModel.challengeEvaluationResult  {
-                    ZStack {
-                        ParticleBurst()
-                            .transition(.scale(scale: 0.4).combined(with: .opacity))
-                        ConfettiView()
-                            .transition(.opacity)
-                    }
-                    .ignoresSafeArea()
-                }
+                
 
                 // Hidden navigation link that triggers when showResult becomes true
                 NavigationLink(
-                    destination: ResultPage(viewModel: viewModel),
+                    destination: ResultPage(viewModel: viewModel, imageURL: imageURL),
                     isActive: $showResult
                 ) {
                     EmptyView()
@@ -75,6 +87,7 @@ struct ContentView: View {
                 )
                 .ignoresSafeArea()
             )
+            
         }
     }
     
@@ -90,18 +103,18 @@ struct ContentView: View {
     func submit() {
         Task {
             viewModel.reset()
+            
             await viewModel.generateResponse(for: engage)
-        }
-        withAnimation(.spring(duration: 0.4)) {
-            didSubmit = true
-        }
-        // Small anticipation delay then explode into result view
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.08) {
-            withAnimation(.interpolatingSpring(stiffness: 160, damping: 18)) {
-                showResult = true
+
+            await MainActor.run {
+                withAnimation(.spring(duration: 0.4)) {
+                    didSubmit = true
+                }
+                withAnimation(.interpolatingSpring(stiffness: 160, damping: 18)) {
+                    showResult = true
+                }
             }
         }
     }
     
 }
-

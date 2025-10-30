@@ -23,11 +23,17 @@ struct TestView: View {
                 VStack(alignment: .leading, spacing: 16) {
                     headerFlavor
                     Text("🧠 Big Idea")
-                    StyledTextField(placeholder: "Big Idea", text: $engage.bigIdea)
+                    StyledTextField(placeholder: "Big Idea", text: $engage.bigIdea, onTypingBegan: {
+                        Task { await viewModel.prewarmIfNeeded() }
+                    })
                     Text("❓ Essential Question")
-                    StyledTextField(placeholder: "Essential Question", text: $engage.essentialQuestion)
+                    StyledTextField(placeholder: "Essential Question", text: $engage.essentialQuestion, onTypingBegan: {
+                        Task { await viewModel.prewarmIfNeeded() }
+                    })
                     Text("🧩 Challenge")
-                    StyledTextField(placeholder: "Challenge", text: $engage.challengeStatement)
+                    StyledTextField(placeholder: "Challenge", text: $engage.challengeStatement, onTypingBegan: {
+                        Task { await viewModel.prewarmIfNeeded() }
+                    })
                 }
 
                 HStack {
@@ -58,7 +64,7 @@ struct TestView: View {
 
                 // Hidden navigation link that triggers when showResult becomes true
                 NavigationLink(
-                    destination: ResultPage(viewModel: viewModel),
+                    destination: ResultPage(viewModel: viewModel, imageURL: nil),
                     isActive: $showResult
                 ) {
                     EmptyView()
@@ -104,4 +110,3 @@ struct TestView: View {
     }
     
 }
-

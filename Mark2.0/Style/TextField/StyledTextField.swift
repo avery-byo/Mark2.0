@@ -11,6 +11,10 @@ struct StyledTextField: View {
     var placeholder: String
     @Binding var text: String
     
+    var onTypingBegan: (() -> Void)? = nil
+    
+    @State private var hasBegunTyping = false
+    
     var body: some View {
         
         HStack(spacing: 8) {
@@ -19,6 +23,13 @@ struct StyledTextField: View {
                 .font(.system(size: 18))
                 .padding(.vertical, 14)
                 .padding(.leading, 14)
+                .onChange(of: text) { oldValue, newValue in
+                    // Trigger only once when user starts typing (transition from empty to non-empty)
+                    if !hasBegunTyping && !newValue.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                        hasBegunTyping = true
+                        onTypingBegan?()
+                    }
+                }
         }
         .background(
             RoundedRectangle(cornerRadius: 16, style: .continuous)
@@ -37,3 +48,4 @@ struct StyledTextField: View {
         .shadow(color: Color.black.opacity(0.08), radius: 14, x: 0, y: 6)
     }
 }
+

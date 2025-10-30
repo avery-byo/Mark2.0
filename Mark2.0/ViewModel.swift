@@ -79,6 +79,8 @@ class ViewModel: ObservableObject {
     
     @Published var challengeEvaluationResult: ChallengeEvaluationResult?
     
+    private var hasPrewarmed = false
+    
     var languageModelSession: LanguageModelSession?
     
     init() {
@@ -90,8 +92,21 @@ class ViewModel: ObservableObject {
         print("Language model setup complete.")
     }
     
+    func prewarmIfNeeded() async {
+        guard let languageModelSession else { return }
+        if hasPrewarmed { return }
+        do {
+            try await languageModelSession.prewarm()
+            hasPrewarmed = true
+            print("Language model prewarmed.")
+        } catch {
+            // If prewarm fails, allow retry on next trigger
+            hasPrewarmed = false
+            print("Prewarm failed: \(error)")
+        }
+    }
+    
     func reset(){
-        setupLanguageModel()
         challengeEvaluationResult = nil
         isResponding = false
         errorMessage = nil
@@ -124,7 +139,19 @@ class ViewModel: ObservableObject {
                                                                   generating: ChallengeEvaluationResult.self,
                                                                   options: options)
             
-            challengeEvaluationResult = response.content
+            if let result = response.content as ChallengeEvaluationResult? {
+                let numberedSuggestions = result.improvementSuggestions.enumerated().map { index, suggestion in
+                    "\(index + 1). \(suggestion)"
+                }
+                challengeEvaluationResult = ChallengeEvaluationResult(
+                    evaluation: result.evaluation,
+                    reason: result.reason,
+                    improvementSuggestions: numberedSuggestions
+                )
+            } else {
+                challengeEvaluationResult = response.content
+            }
+            
             print("Response: \(response)")
             
             
@@ -137,3 +164,4 @@ class ViewModel: ObservableObject {
         }
     }
 }
+
