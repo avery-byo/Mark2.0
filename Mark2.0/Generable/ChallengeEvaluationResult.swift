@@ -25,6 +25,6 @@ struct ChallengeEvaluationResult {
     @Guide(description: "One-sentence rationale explaining the verdict. State the key issue or justification clearly.")
     let reason: String
     
-    @Guide(description: "Actionable suggestions to improve the challenge. Provide 1–5 short, imperative phrases.")
+    @Guide(description: "When the verdict is not '👍 Good to Go', provide 1-5 concise, imperative sugestions to improve the challenge. If it is '👍 Good to Go', return an empty array.")
     let improvementSuggestions: [String]
 }

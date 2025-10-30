@@ -79,24 +79,28 @@ struct ResultPage: View {
                             .cornerRadius(8)
                         
                         VStack  {
-                            Text("Improvement Suggestions:")
-                                .bold()
-                                .font(.system(.title2, design: .monospaced))
-                                .multilineTextAlignment(.leading)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                .padding(8)
-                                .background(Color.gray.opacity(0.1))
-                                .cornerRadius(8)
-                            
-                            ForEach(result.improvementSuggestions, id: \.self) { suggestion in
-                                Text("\(suggestion)")
-                                    .font(.system(.body, design: .monospaced))
+                            if !result.improvementSuggestions.isEmpty {
+                                Text("Improvement Suggestions:")
+                                    .bold()
+                                    .font(.system(.title2, design: .monospaced))
                                     .multilineTextAlignment(.leading)
                                     .frame(maxWidth: .infinity, alignment: .leading)
                                     .padding(8)
                                     .background(Color.gray.opacity(0.1))
                                     .cornerRadius(8)
+                                
+                                ForEach(result.improvementSuggestions, id: \.self) { suggestion in
+                                    Text("\(suggestion)")
+                                        .font(.system(.body, design: .monospaced))
+                                        .multilineTextAlignment(.leading)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                        .padding(8)
+                                        .background(Color.gray.opacity(0.1))
+                                        .cornerRadius(8)
+                                }
                             }
+                            
+                            
                         }
                         .padding(.top)
                     }
