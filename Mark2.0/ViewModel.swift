@@ -19,6 +19,9 @@ struct Engage {
 class ViewModel: ObservableObject {
     @Published var isResponding = false
     @Published var errorMessage: String?
+    @Published var bigIdea: String = ""
+    @Published var essentialQuestion: String = ""
+    @Published var challengeStatement: String = ""
     @Published var instructions: String = """
         You are an AI mentor guiding learner teams to self-evaluate their Engage Phase in Challenge-Based Learning (CBL).
         Evaluate the Challenge Statement based on clarity, relevance, and actionability.
@@ -92,6 +95,9 @@ class ViewModel: ObservableObject {
     
     func reset(){
         setupLanguageModel()
+        bigIdea = ""
+        essentialQuestion = ""
+        challengeStatement = ""
         challengeEvaluationResult = nil
         isResponding = false
         errorMessage = nil
@@ -137,3 +143,4 @@ class ViewModel: ObservableObject {
         }
     }
 }
+

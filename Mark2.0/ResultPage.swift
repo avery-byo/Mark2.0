@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ResultPage: View {
+    @Environment(\.dismiss) private var dismiss
     @ObservedObject var viewModel: ViewModel
     
     var body: some View {
@@ -53,11 +54,11 @@ struct ResultPage: View {
                 
                 Button {
                     viewModel.reset()
+                    dismiss()
                 } label: {
                     Text("Reset")
                 }
                 .buttonStyle(RedGradientPillButtonStyle())
-                .disabled(true)
             }
                 
         }
@@ -84,3 +85,4 @@ struct ResultPage: View {
 #Preview {
     ResultPage(viewModel: ViewModel())
 }
+

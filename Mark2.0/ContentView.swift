@@ -13,9 +13,6 @@ struct ContentView: View {
     @State private var didSubmit: Bool = false
     @State private var showResult: Bool = false
     @StateObject var viewModel: ViewModel = .init()
-    @State var engage: Engage = Engage(bigIdea: "",
-                                       essentialQuestion: "",
-                                       challengeStatement: "")
     
     var body: some View {
         NavigationStack {
@@ -23,11 +20,11 @@ struct ContentView: View {
                 VStack(alignment: .leading, spacing: 16) {
                     headerFlavor
                     Text("🧠 Big Idea")
-                    StyledTextField(placeholder: "Big Idea", text: $engage.bigIdea)
+                    StyledTextField(placeholder: "Big Idea", text: $viewModel.bigIdea)
                     Text("❓ Essential Question")
-                    StyledTextField(placeholder: "Essential Question", text: $engage.essentialQuestion)
+                    StyledTextField(placeholder: "Essential Question", text: $viewModel.essentialQuestion)
                     Text("🧩 Challenge")
-                    StyledTextField(placeholder: "Challenge", text: $engage.challengeStatement)
+                    StyledTextField(placeholder: "Challenge", text: $viewModel.challengeStatement)
                 }
 
                 HStack {
@@ -90,6 +87,7 @@ struct ContentView: View {
     func submit() {
         Task {
             viewModel.reset()
+            let engage = Engage(bigIdea: viewModel.bigIdea, essentialQuestion: viewModel.essentialQuestion, challengeStatement: viewModel.challengeStatement)
             await viewModel.generateResponse(for: engage)
         }
         withAnimation(.spring(duration: 0.4)) {
